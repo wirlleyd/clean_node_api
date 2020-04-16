@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/wirlleyd/clean_node_api/issues"
   },
-  "homepage": "https://github.com/wirlleyd/clean_node_api#readme"
+  "homepage": "https://github.com/wirlleyd/clean_node_api#readme",
+  "devDependencies": {
+    "git-commit-msg-linter": "^2.4.2"
+  }
 }
