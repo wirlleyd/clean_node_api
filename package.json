@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "test:staged": "jest"
+    "test": "jest --coverage --watchAll --passWithNoTests",
+    "test:staged": "jest --passWithNoTests"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
   "devDependencies": {
     "@types/jest": "^25.2.1",
     "@types/node": "^13.11.1",
+    "babel-eslint": "^10.1.0",
     "git-commit-msg-linter": "^2.4.2",
     "husky": "^4.2.5",
     "jest": "^25.3.0",
