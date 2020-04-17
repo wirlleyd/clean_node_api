@@ -215,17 +215,23 @@ describe("SignUp Controller", () => {
   });
 
   it("should return 200 if all information is provided", () => {
+    const { sut } = makeSut();
     const httpRequest = {
       body: {
-        name: "any_name",
-        email: "any_email@mail.com",
-        password: "any_password",
-        passwordConfirmation: "any_password",
+        name: "valid_name",
+        email: "valid_email@mail.com",
+        password: "valid_password",
+        passwordConfirmation: "valid_password",
       },
     };
-    const { sut } = makeSut();
     const httpResponse = sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(200);
     expect(httpResponse.body.message).toEqual("Success to sign up.");
+    expect(httpResponse.body.user).toEqual({
+      id: "valid_id",
+      name: "valid_name",
+      email: "valid_email@mail.com",
+      password: "valid_password",
+    });
   });
 });
