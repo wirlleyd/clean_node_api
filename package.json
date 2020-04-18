@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage --watchAll --passWithNoTests",
-    "test:staged": "jest --passWithNoTests"
+    "test": "jest --coverage --watchAll --passWithNoTests --silent --noStackTrace --runInBand",
+    "test:verbose": "jest --coverage --watchAll --passWithNoTests --runInBand",
+    "test:staged": "jest --passWithNoTests --findRelatedTests",
+    "test:ci": "yarn test -- --coverage"
   },
   "repository": {
     "type": "git",

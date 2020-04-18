@@ -44,6 +44,7 @@ export class SignUpController implements Controller {
       });
       return ok({ message: "Success to sign up.", user: account });
     } catch (error) {
+      console.error(error);
       return serverError();
     }
   }
