@@ -21,10 +21,10 @@ export class DbAddAccount implements AddAccount {
     const encriptedPassword = await this.encrypter.encrypt(
       accountData.password
     );
-    await this.addAccountRepository.add({
+    const account = await this.addAccountRepository.add({
       ...accountData,
       password: encriptedPassword,
     });
-    return new Promise((resolve) => resolve(null));
+    return account;
   }
 }
