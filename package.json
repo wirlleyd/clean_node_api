@@ -8,7 +8,7 @@
     "test": "jest --coverage  --passWithNoTests --silent --noStackTrace  --onlyChanged --watch",
     "test:verbose": "jest --coverage --watchAll --passWithNoTests --runInBand",
     "test:staged": "jest --passWithNoTests",
-    "test:ci": "jest --passWithNoTests --silent --noStackTrace --runInBand"
+    "test:ci": "jest --passWithNoTests"
   },
   "repository": {
     "type": "git",
