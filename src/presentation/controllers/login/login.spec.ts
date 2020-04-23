@@ -2,6 +2,7 @@ import { LoginController } from "./login";
 import { badRequest, ok, serverError } from "../../helpers/http-helper";
 import { MissingParamError, InvalidParamError } from "../../erros";
 import { EmailValidator } from "../signup/signup-protocols";
+import { Authentication } from "../../../domain/usecases/authentication";
 
 const makeFakeHttpRequest = () => ({
   body: {
@@ -20,17 +21,30 @@ const makeEmailValidator = (): EmailValidator => {
   return new EmailValidatorStub();
 };
 
+const makeAuthentication = (): Authentication => {
+  class AuthenticationStub implements Authentication {
+    async auth(email: string, password: string): Promise<string> {
+      return new Promise((resolve) => resolve("any_token"));
+    }
+  }
+
+  return new AuthenticationStub();
+};
+
 interface SutTypes {
   sut: LoginController;
   emailValidatorStub: EmailValidator;
+  authenticationStub: Authentication;
 }
 
 const makeSut = (): SutTypes => {
   const emailValidatorStub = makeEmailValidator();
-  const sut = new LoginController(emailValidatorStub);
+  const authenticationStub = makeAuthentication();
+  const sut = new LoginController(emailValidatorStub, authenticationStub);
   return {
     sut,
     emailValidatorStub,
+    authenticationStub,
   };
 };
 
@@ -81,5 +95,16 @@ describe("Login Controller", () => {
     const httpRequest = makeFakeHttpRequest();
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse).toEqual(serverError(new Error()));
+  });
+
+  it("Should call Authentication with currect values", async () => {
+    const { sut, authenticationStub } = makeSut();
+    const authSpy = jest.spyOn(authenticationStub, "auth");
+    const httpRequest = makeFakeHttpRequest();
+    await sut.handle(httpRequest);
+    expect(authSpy).toHaveBeenCalledWith(
+      httpRequest.body.email,
+      httpRequest.body.password
+    );
   });
 });
