@@ -6,17 +6,25 @@ import {
   HttpResponse,
   EmailValidator,
   AddAccount,
+  Validation,
 } from "./signup-protocols";
 
 export class SignUpController implements Controller {
   emailValidator: EmailValidator;
   addAccount: AddAccount;
-  constructor(emailValidator: EmailValidator, addAcount: AddAccount) {
+  validation: Validation;
+  constructor(
+    emailValidator: EmailValidator,
+    addAcount: AddAccount,
+    validation: Validation
+  ) {
     this.emailValidator = emailValidator;
     this.addAccount = addAcount;
+    this.validation = validation;
   }
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
+      this.validation.validate(httpRequest.body);
       const requiredFileds = [
         "name",
         "email",
