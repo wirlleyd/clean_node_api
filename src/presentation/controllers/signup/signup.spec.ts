@@ -9,6 +9,7 @@ import {
   AccountModel,
   AddAccount,
   AddAccountModel,
+  Validation,
 } from "./signup-protocols";
 import { HttpRequest } from "../../protocols";
 
@@ -44,21 +45,36 @@ const makeAddAccount = (): AddAccount => {
   }
   return new AddAccountStub();
 };
+const makeValidation = (): Validation => {
+  class ValidationStub implements Validation {
+    validate(input: any): Error {
+      return null;
+    }
+  }
+  return new ValidationStub();
+};
 
 interface SutTypes {
   sut: SignUpController;
   emailValidatorStub: EmailValidator;
   addAccountStub: AddAccount;
+  validationStub: Validation;
 }
 
 const makeSut = (): SutTypes => {
   const emailValidatorStub = makeEmailValidator();
   const addAccountStub = makeAddAccount();
-  const sut = new SignUpController(emailValidatorStub, addAccountStub);
+  const validationStub = makeValidation();
+  const sut = new SignUpController(
+    emailValidatorStub,
+    addAccountStub,
+    validationStub
+  );
   return {
     sut,
     addAccountStub,
     emailValidatorStub,
+    validationStub,
   };
 };
 
@@ -201,5 +217,13 @@ describe("SignUp Controller", () => {
       email: "valid_email@mail.com",
       password: "valid_password",
     });
+  });
+
+  it("should call Validation with correct value", async () => {
+    const { sut, validationStub } = makeSut();
+    const validationSpy = jest.spyOn(validationStub, "validate");
+    const httpRequest = makeFakeRequest();
+    await sut.handle(httpRequest);
+    expect(validationSpy).toHaveBeenCalledWith(httpRequest.body);
   });
 });
