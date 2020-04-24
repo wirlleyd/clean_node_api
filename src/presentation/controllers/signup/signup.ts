@@ -1,4 +1,3 @@
-import { InvalidParamError } from "../../erros/index";
 import { badRequest, serverError, ok } from "../../helpers/http-helper";
 import {
   Controller,
@@ -13,12 +12,7 @@ export class SignUpController implements Controller {
   emailValidator: EmailValidator;
   addAccount: AddAccount;
   validation: Validation;
-  constructor(
-    emailValidator: EmailValidator,
-    addAcount: AddAccount,
-    validation: Validation
-  ) {
-    this.emailValidator = emailValidator;
+  constructor(addAcount: AddAccount, validation: Validation) {
     this.addAccount = addAcount;
     this.validation = validation;
   }
@@ -28,12 +22,9 @@ export class SignUpController implements Controller {
       if (errorValidation) {
         return badRequest(errorValidation);
       }
-      const { email, passwordConfirmation, password, name } = httpRequest.body;
-      const isValid = this.emailValidator.isValid(email);
 
-      if (!isValid) {
-        return badRequest(new InvalidParamError("email"));
-      }
+      const { email, password, name } = httpRequest.body;
+
       const account = await this.addAccount.add({
         name,
         email,
