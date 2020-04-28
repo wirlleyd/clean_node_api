@@ -38,11 +38,21 @@ const makeSut = (): SutTypes => {
     loadAccountByEmailRepositoryStub,
   };
 };
+
 describe("DbAuthentication UseCase", () => {
   it("Shoul call LoadAccountByEmailRepository with correct email", async () => {
     const { loadAccountByEmailRepositoryStub, sut } = makeSut();
     const loadSpy = jest.spyOn(loadAccountByEmailRepositoryStub, "load");
     await sut.auth(makeFakeAuthentication());
     expect(loadSpy).toHaveBeenCalledWith("any_email@mail.com");
+  });
+
+  it("Shoul throw if LoadAccountByEmailRepository throws", async () => {
+    const { loadAccountByEmailRepositoryStub, sut } = makeSut();
+    jest
+      .spyOn(loadAccountByEmailRepositoryStub, "load")
+      .mockReturnValueOnce(new Promise((res, rej) => rej(new Error())));
+    const promise = sut.auth(makeFakeAuthentication());
+    await expect(promise).rejects.toThrow();
   });
 });
