@@ -20,7 +20,7 @@ export class DbAuthentication implements Authentication {
       authentication.email
     );
     if (account) {
-      this.hashCompare.compare(authentication.password, account.password);
+      await this.hashCompare.compare(authentication.password, account.password);
     }
     return null;
   }

@@ -88,16 +88,16 @@ describe("DbAuthentication UseCase", () => {
     expect(comparerSpy).toHaveBeenCalledWith("any_password", "hashed_password");
   });
 
-  // it("Should throw if HashComparer throws", async () => {
-  //   const { hashComparerStub, sut } = makeSut();
-  //   jest
-  //     .spyOn(hashComparerStub, "compare")
-  //     .mockReturnValueOnce(
-  //       new Promise((resolve, reject) => reject(new Error()))
-  //     );
-  //   const promise = sut.auth(makeFakeAuthentication());
-  //   await expect(promise).rejects.toThrow();
-  // });
+  it("Should throw if HashComparer throws", async () => {
+    const { hashComparerStub, sut } = makeSut();
+    jest
+      .spyOn(hashComparerStub, "compare")
+      .mockReturnValueOnce(
+        new Promise((resolve, reject) => reject(new Error()))
+      );
+    const promise = sut.auth(makeFakeAuthentication());
+    await expect(promise).rejects.toThrow();
+  });
 
   it("Should return null if HashComparer returns false", async () => {
     const { hashComparerStub, sut } = makeSut();
