@@ -1,4 +1,4 @@
-import { makeLoginValidator } from "./login-validation";
+import { makeLoginValidator } from "./login-validation-factory";
 import {
   ValidationComposite,
   RequiredFieldValidation,
