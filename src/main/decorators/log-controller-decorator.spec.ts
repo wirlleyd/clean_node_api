@@ -1,4 +1,4 @@
-import { LogControllerDecorator } from "./log";
+import { LogControllerDecorator } from "./log-controller-decorator";
 import { Controller } from "../../presentation/protocols";
 import { HttpRequest, HttpResponse } from "../../presentation/protocols";
 import { serverError } from "../../presentation/helpers/http/http-helper";
