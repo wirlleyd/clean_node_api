@@ -2,10 +2,10 @@ import {
   Authentication,
   AuthenticationModel,
 } from "../../../domain/usecases/authentication";
-import { LoadAccountByEmailRepository } from "../../protocols/db/load-accountBy-email-repository";
+import { LoadAccountByEmailRepository } from "../../protocols/db/account/load-accountBy-email-repository";
 import { HashComparer } from "../../protocols/criptography/hash-comparer";
 import { Encrypter } from "../../protocols/criptography/encrypter";
-import { UpdateAccessTokenRepository } from "../../protocols/db/update-access-token-repository";
+import { UpdateAccessTokenRepository } from "../../protocols/db/account/update-access-token-repository";
 
 export class DbAuthentication implements Authentication {
   laodAccountByEmailRepository: LoadAccountByEmailRepository = null;
