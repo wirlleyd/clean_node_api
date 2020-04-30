@@ -1,4 +1,4 @@
-import { makeSignUpValidation } from "./sign-up-validation";
+import { makeSignUpValidation } from "./sign-up-validation-factory";
 import { Validation } from "../../../presentation/helpers/validators/validation";
 import { EmailValidator } from "../../../presentation/protocols/email-validator";
 import {
