@@ -6,13 +6,20 @@ import {
   AddAccount,
   Validation,
 } from "./signup-controller-protocols";
+import { Authentication } from "../login/login-controller-protocols";
 
 export class SignUpController implements Controller {
   addAccount: AddAccount;
   validation: Validation;
-  constructor(addAcount: AddAccount, validation: Validation) {
+  authentication: Authentication;
+  constructor(
+    addAcount: AddAccount,
+    validation: Validation,
+    authentication: Authentication
+  ) {
     this.addAccount = addAcount;
     this.validation = validation;
+    this.authentication = authentication;
   }
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
@@ -28,6 +35,7 @@ export class SignUpController implements Controller {
         email,
         password,
       });
+      this.authentication.auth({ email, password });
       return ok({ message: "Success to sign up.", user: account });
     } catch (error) {
       console.error(error);
