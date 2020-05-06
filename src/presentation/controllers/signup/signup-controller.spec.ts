@@ -113,12 +113,8 @@ describe("SignUp Controller", () => {
     const httpRequest = makeFakeRequest();
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(200);
-    expect(httpResponse.body.message).toEqual("Success to sign up.");
-    expect(httpResponse.body.user).toEqual({
-      id: "valid_id",
-      name: "valid_name",
-      email: "valid_email@mail.com",
-      password: "valid_password",
+    expect(httpResponse.body).toEqual({
+      accessToken: "any_token",
     });
   });
 
