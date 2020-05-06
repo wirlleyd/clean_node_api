@@ -35,8 +35,8 @@ export class SignUpController implements Controller {
         email,
         password,
       });
-      this.authentication.auth({ email, password });
-      return ok({ message: "Success to sign up.", user: account });
+      const accessToken = await this.authentication.auth({ email, password });
+      return ok({ accessToken });
     } catch (error) {
       console.error(error);
       return serverError(error);
