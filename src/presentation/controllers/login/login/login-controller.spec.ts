@@ -4,10 +4,14 @@ import {
   serverError,
   unauthorized,
   ok,
-} from "../../helpers/http/http-helper";
-import { MissingParamError, InvalidParamError, ServerError } from "../../erros";
+} from "../../../helpers/http/http-helper";
+import {
+  MissingParamError,
+  InvalidParamError,
+  ServerError,
+} from "../../../erros";
 import { Authentication, Validation } from "./login-controller-protocols";
-import { AuthenticationModel } from "../../../domain/usecases/authentication";
+import { AuthenticationModel } from "../../../../domain/usecases/authentication";
 
 const makeFakeHttpRequest = () => ({
   body: {

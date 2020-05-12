@@ -3,7 +3,7 @@ import {
   serverError,
   ok,
   forbidden,
-} from "../../helpers/http/http-helper";
+} from "../../../helpers/http/http-helper";
 import {
   Controller,
   HttpRequest,
@@ -11,8 +11,9 @@ import {
   AddAccount,
   Validation,
 } from "./signup-controller-protocols";
-import { Authentication } from "../login/login-controller-protocols";
-import { EmailInUseError } from "../../erros";
+import {} from "../login/login-controller-protocols";
+import { EmailInUseError } from "../../../erros";
+import { Authentication } from "../../../../domain/usecases/authentication";
 
 export class SignUpController implements Controller {
   addAccount: AddAccount;

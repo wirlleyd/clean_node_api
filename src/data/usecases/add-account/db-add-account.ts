@@ -6,11 +6,13 @@ import {
   AddAccountRepository,
 } from "./db-add-account-protocols";
 import { LoadAccountByEmailRepository } from "../../protocols/db/account/load-accountBy-email-repository";
+import { AccountMongoRepository } from "../../../infra/db/mongodb/account/account-mongo-repository";
 
 export class DbAddAccount implements AddAccount {
   Hasher: Hasher;
   addAccountRepository: AddAccountRepository;
   loadAccountByEmailRepository: LoadAccountByEmailRepository;
+  accountMongoRepository: AccountMongoRepository;
   constructor(
     Hasher: Hasher,
     addAccountRepository: AddAccountRepository,

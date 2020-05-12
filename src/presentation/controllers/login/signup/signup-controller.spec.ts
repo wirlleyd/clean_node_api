@@ -3,15 +3,15 @@ import {
   MissingParamError,
   ServerError,
   EmailInUseError,
-} from "../../erros/index";
+} from "../../../erros/index";
 import {
   AccountModel,
   AddAccount,
   AddAccountModel,
   Validation,
 } from "./signup-controller-protocols";
-import { HttpRequest } from "../../protocols";
-import { badRequest, forbidden } from "../../helpers/http/http-helper";
+import { HttpRequest } from "../../../protocols";
+import { badRequest, forbidden } from "../../../helpers/http/http-helper";
 import {
   Authentication,
   AuthenticationModel,
