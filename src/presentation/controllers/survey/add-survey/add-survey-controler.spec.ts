@@ -5,7 +5,11 @@ import {
   AddSurvey,
 } from "./add-survey-controller-protocols";
 import { Validation } from "../../../helpers/validators/validation";
-import { badRequest, serverError } from "../../../helpers/http/http-helper";
+import {
+  badRequest,
+  serverError,
+  noContent,
+} from "../../../helpers/http/http-helper";
 
 const httpRequestMaker = (): HttpRequest => ({
   body: {
@@ -83,5 +87,12 @@ describe("AddSurveyController", () => {
       .mockReturnValueOnce(new Promise((res, rej) => rej(new Error())));
     const httpResponde = await sut.handle(httpRequestMaker());
     expect(httpResponde).toEqual(serverError(new Error()));
+  });
+
+  it("Shoul return 204 on success", async () => {
+    const { sut } = makeSut();
+    const httpRequest = httpRequestMaker();
+    const response = await sut.handle(httpRequest);
+    expect(response).toEqual(noContent());
   });
 });
