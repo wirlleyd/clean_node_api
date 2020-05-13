@@ -1,7 +1,7 @@
 import { AccountModel } from "../models/account";
 
 type Answer = {
-  image: string;
+  image?: string;
   answer: string;
 };
 
