@@ -2,6 +2,8 @@ import { LoadSurveysController } from "./load-surveys-controller";
 import { LoadSurveys } from "../../../domain/usecases/load-surveys";
 import { SurveyModel } from "../../../domain/models/survey";
 import MockDate from "mockdate";
+import { ok } from "../../helpers/http/http-helper";
+
 const makeFakeSurveys = (): SurveyModel[] => {
   return [
     {
@@ -26,7 +28,6 @@ const makeLoadSurveyStub = (): LoadSurveys => {
   }
   return new LoadSurveysStub();
 };
-
 interface SutTypes {
   sut: LoadSurveysController;
   loadSurveysStub: LoadSurveys;
@@ -55,5 +56,11 @@ describe("LoadSurveys Controller", () => {
     const loadSpy = jest.spyOn(loadSurveysStub, "load");
     await sut.handle({});
     expect(loadSpy).toHaveBeenCalled();
+  });
+
+  it("Should return 200 on success", async () => {
+    const { sut } = makeSut();
+    const response = await sut.handle({});
+    expect(response).toEqual(ok(makeFakeSurveys()));
   });
 });
