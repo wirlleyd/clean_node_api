@@ -64,7 +64,7 @@ describe("LoadSurveys Controller", () => {
     expect(response).toEqual(ok(makeFakeSurveys()));
   });
 
-  it("LoadSurveyController should throw if LoadSurvey throws", async () => {
+  it("Should LoadSurveyController return 500 if LoadSurvey throws", async () => {
     const { sut, loadSurveysStub } = makeSut();
     jest
       .spyOn(loadSurveysStub, "load")
