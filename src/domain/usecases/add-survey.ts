@@ -1,9 +1,5 @@
 import { AccountModel } from "../models/account";
-
-type Answer = {
-  image?: string;
-  answer: string;
-};
+import { Answer } from '../models/survey'
 
 export interface AddSurveyModel {
   question: string;
