@@ -20,9 +20,7 @@ export class AuthMiddleware implements Middleware {
           accessToken,
           this.role
         );
-        if (account) {
-          return ok({ accountId: account.id });
-        }
+        return account && ok({ accountId: account.id });
       }
       return forbidden(new AccessDeniedError());
     } catch (error) {
