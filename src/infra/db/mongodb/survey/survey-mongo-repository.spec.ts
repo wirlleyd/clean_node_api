@@ -1,8 +1,36 @@
 import { MongoHelper } from "../helper/mongo-helper";
 import { SurveyMongoRepository } from "./survey-mongo-repository";
 import { Collection } from "mongodb";
+import { AddSurveyModel } from "../../../../domain/usecases/add-survey";
 
 let surveyCollection: Collection;
+
+const makeFakeSurveyData = (): AddSurveyModel[] => [
+  {
+    question: "any_question",
+    answers: [
+      {
+        image: "any_image",
+        answer: "any_answer",
+      },
+    ],
+    date: new Date(),
+  },
+  {
+    question: "other_question",
+    answers: [
+      {
+        image: "other_image",
+        answer: "other_answer",
+      },
+    ],
+    date: new Date(),
+  },
+];
+
+const makeSut = (): SurveyMongoRepository => {
+  return new SurveyMongoRepository();
+};
 
 describe("Account Mongo Repository", () => {
   beforeAll(async () => {
@@ -18,26 +46,35 @@ describe("Account Mongo Repository", () => {
     await surveyCollection.deleteMany({});
   });
 
-  const makeSut = (): SurveyMongoRepository => {
-    return new SurveyMongoRepository();
-  };
-
-  it("Should add an survey on add success", async () => {
-    const sut = makeSut();
-    await sut.add({
-      question: "any_question",
-      answers: [
-        {
-          image: "any_image",
-          answer: "any_answer",
-        },
-        {
-          answer: "other_answer",
-        },
-      ],
-      date: new Date()
+  describe("Add", () => {
+    it("Should add an survey on add success", async () => {
+      const sut = makeSut();
+      await sut.add({
+        question: "any_question",
+        answers: [
+          {
+            image: "any_image",
+            answer: "any_answer",
+          },
+          {
+            answer: "other_answer",
+          },
+        ],
+        date: new Date(),
+      });
+      const survey = await surveyCollection.findOne({
+        question: "any_question",
+      });
+      expect(survey).toBeTruthy();
     });
-    const survey = await surveyCollection.findOne({ question: "any_question" });
-    expect(survey).toBeTruthy();
+  });
+
+  describe("LoadAll", () => {
+    it("Should load all surveys on success", async () => {
+      await surveyCollection.insertMany(makeFakeSurveyData());
+      const sut = makeSut();
+      const surveys = await sut.loadAll();
+      expect(surveys.length).toBe(2);
+    });
   });
 });
