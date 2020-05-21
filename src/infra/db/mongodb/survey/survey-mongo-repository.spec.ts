@@ -76,5 +76,11 @@ describe("Account Mongo Repository", () => {
       const surveys = await sut.loadAll();
       expect(surveys.length).toBe(2);
     });
+
+    it("Should load empty list", async () => {
+      const sut = makeSut();
+      const surveys = await sut.loadAll();
+      expect(surveys.length).toBe(0);
+    });
   });
 });
