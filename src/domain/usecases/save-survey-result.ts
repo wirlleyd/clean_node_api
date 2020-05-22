@@ -1,5 +1,3 @@
-import { AccountModel } from "../models/account";
-import { Answer } from "../models/survey";
 import { SurveyResultModel } from "../models/survey-result";
 
 export type SaveSurveyResultModel = Omit<SurveyResultModel, "id">;
