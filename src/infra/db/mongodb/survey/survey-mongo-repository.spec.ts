@@ -68,7 +68,6 @@ describe("Account Mongo Repository", () => {
       expect(survey).toBeTruthy();
     });
   });
-
   describe("LoadAll", () => {
     it("Should load all surveys on success", async () => {
       await surveyCollection.insertMany(makeFakeSurveyData());

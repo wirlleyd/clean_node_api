@@ -6,15 +6,15 @@ import { SurveyResultModel } from "../../../domain/models/survey-result";
 
 const makeFakeSurveyResult = (): SurveyResultModel => ({
   id: "any_id",
-  account_id: "any_account_id",
-  survey_id: "any_survey_id",
+  accountId: "any_account_id",
+  surveyId: "any_survey_id",
   answer: "any_answer",
   date: new Date(),
 });
 
 const makeFakeSurveyResultData = (): Omit<SurveyResultModel, "id"> => ({
-  account_id: "any_account_id",
-  survey_id: "any_survey_id",
+  accountId: "any_account_id",
+  surveyId: "any_survey_id",
   answer: "any_answer",
   date: new Date(),
 });
