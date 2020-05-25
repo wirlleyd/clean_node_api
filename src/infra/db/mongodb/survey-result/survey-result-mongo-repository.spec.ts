@@ -13,7 +13,10 @@ const makeSurvey = async (): Promise<SurveyModel> => {
     ops: [survey, ...otherProps],
   } = await surveyCollection.insertOne({
     question: "any_question",
-    answers: [{ answer: "any_answer", image: "any_image" }],
+    answers: [
+      { answer: "any_answer", image: "any_image" },
+      { answer: "another_answer", image: "another_image" },
+    ],
     date: new Date(),
   });
   return MongoHelper.map(survey);
@@ -46,9 +49,9 @@ describe("Survey Result Mongo Repository", () => {
   beforeEach(async () => {
     surveyCollection = await MongoHelper.getCollection("surveys");
     await surveyCollection.deleteMany({});
-    surveyResultCollection = await MongoHelper.getCollection("surveys");
+    surveyResultCollection = await MongoHelper.getCollection("surveysResult");
     await surveyResultCollection.deleteMany({});
-    accountCollection = await MongoHelper.getCollection("surveys");
+    accountCollection = await MongoHelper.getCollection("accounts");
     await accountCollection.deleteMany({});
   });
 
@@ -64,6 +67,25 @@ describe("Survey Result Mongo Repository", () => {
         date: new Date(),
       });
       expect(result).toBeTruthy();
+    });
+    it("Should update an survey result if its not new", async () => {
+      const suvey = await makeSurvey();
+      const account = await makeAccount();
+      await surveyResultCollection.insertOne({
+        surveyId: suvey.id,
+        accountId: account.id,
+        answer: suvey.answers[0].answer,
+        date: new Date(),
+      });
+      const sut = makeSut();
+      await sut.save({
+        surveyId: suvey.id,
+        accountId: account.id,
+        answer: suvey.answers[1].answer,
+        date: new Date(),
+      });
+      const results = await surveyResultCollection.count();
+      expect(results).toBe(1);
     });
   });
 });
