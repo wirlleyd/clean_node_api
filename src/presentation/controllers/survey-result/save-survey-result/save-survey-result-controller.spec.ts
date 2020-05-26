@@ -3,6 +3,7 @@ import {
   HttpRequest,
   LoadSurveyById,
   SurveyModel,
+  ok,
 } from "./save-survey-result-controller-protocols";
 
 const makeFakeRequest = (): HttpRequest => ({
@@ -53,5 +54,11 @@ describe("SaveSurveyResultController", () => {
       params: { surveyId },
     } = makeFakeRequest();
     expect(loadByIdSpy).toHaveBeenCalledWith(surveyId);
+  });
+
+  it("Should LoadSurveyById return an survey on success", async () => {
+    const { sut } = makeSut();
+    const response = await sut.handle(makeFakeRequest());
+    expect(ok(makeFakeSurvey())).toEqual(response);
   });
 });
