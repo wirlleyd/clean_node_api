@@ -4,8 +4,8 @@ import {
   LoadSurveyById,
   SurveyModel,
   ok,
+  serverError,
 } from "./save-survey-result-controller-protocols";
-import { serverError } from "../../../helpers/http/http-helper";
 
 const makeFakeRequest = (): HttpRequest => ({
   params: {

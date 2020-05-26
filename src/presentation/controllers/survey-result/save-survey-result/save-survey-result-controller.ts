@@ -4,8 +4,8 @@ import {
   Controller,
   LoadSurveyById,
   ok,
+  serverError,
 } from "./save-survey-result-controller-protocols";
-import { serverError } from "../../../helpers/http/http-helper";
 
 export class SaveSurveyResultController implements Controller {
   loadSurveyById: LoadSurveyById;
