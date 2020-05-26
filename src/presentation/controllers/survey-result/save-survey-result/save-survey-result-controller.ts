@@ -5,6 +5,7 @@ import {
   LoadSurveyById,
   ok,
 } from "./save-survey-result-controller-protocols";
+import { serverError } from "../../../helpers/http/http-helper";
 
 export class SaveSurveyResultController implements Controller {
   loadSurveyById: LoadSurveyById;
@@ -12,7 +13,11 @@ export class SaveSurveyResultController implements Controller {
     this.loadSurveyById = loadSurveyById;
   }
   async handle({ params: { surveyId } }: HttpRequest): Promise<HttpResponse> {
-    const survey = await this.loadSurveyById.loadById(surveyId);
-    return ok(survey);
+    try {
+      const survey = await this.loadSurveyById.loadById(surveyId);
+      return ok(survey);
+    } catch (error) {
+      return serverError(error);
+    }
   }
 }
