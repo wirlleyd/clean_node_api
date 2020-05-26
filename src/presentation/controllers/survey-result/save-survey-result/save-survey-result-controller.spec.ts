@@ -5,6 +5,7 @@ import {
   SurveyModel,
   ok,
 } from "./save-survey-result-controller-protocols";
+import { serverError } from "../../../helpers/http/http-helper";
 
 const makeFakeRequest = (): HttpRequest => ({
   params: {
@@ -60,5 +61,14 @@ describe("SaveSurveyResultController", () => {
     const { sut } = makeSut();
     const response = await sut.handle(makeFakeRequest());
     expect(ok(makeFakeSurvey())).toEqual(response);
+  });
+
+  it("Should SaveSurveyResultController return 500 if LoadSurveyById throws", async () => {
+    const { sut, loadSurveyById } = makeSut();
+    jest
+      .spyOn(loadSurveyById, "loadById")
+      .mockReturnValueOnce(new Promise((res, rej) => rej(new Error())));
+    const response = await sut.handle(makeFakeRequest());
+    expect(response).toEqual(serverError(new Error()));
   });
 });
