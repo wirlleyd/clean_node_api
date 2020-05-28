@@ -99,12 +99,6 @@ describe("SaveSurveyResultController", () => {
     expect(loadByIdSpy).toHaveBeenCalledWith(surveyId);
   });
 
-  it("Should LoadSurveyById return an survey on success", async () => {
-    const { sut } = makeSut();
-    const response = await sut.handle(makeFakeRequest());
-    expect(ok(makeFakeSurvey())).toEqual(response);
-  });
-
   it("Should SaveSurveyResultController return 403 if LoadSurveyById return null", async () => {
     const { sut, loadSurveyById } = makeSut();
     jest
@@ -160,6 +154,6 @@ describe("SaveSurveyResultController", () => {
   it("Should return 200 on success", async () => {
     const { sut } = makeSut();
     const httpResponse = await sut.handle(makeFakeRequest());
-    expect(httpResponse).toEqual(ok(makeFakeSurvey()));
+    expect(httpResponse).toEqual(ok(makeFakeSurveyResult()));
   });
 });
