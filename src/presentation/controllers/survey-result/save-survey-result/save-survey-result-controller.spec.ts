@@ -147,4 +147,13 @@ describe("SaveSurveyResultController", () => {
       date: new Date(),
     });
   });
+
+  it("Should return 500 if SaveSurveyResult throws", async () => {
+    const { sut, saveSurveyResultStub } = makeSut();
+    jest
+      .spyOn(saveSurveyResultStub, "save")
+      .mockReturnValueOnce(Promise.reject(new Error()));
+    const httpResponse = await sut.handle(makeFakeRequest());
+    expect(httpResponse).toEqual(serverError(new Error()));
+  });
 });
