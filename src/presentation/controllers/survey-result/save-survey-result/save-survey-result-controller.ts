@@ -8,15 +8,22 @@ import {
   forbidden,
   InvalidParamError,
 } from "./save-survey-result-controller-protocols";
+import { SaveSurveyResult } from "../../../../domain/usecases/save-survey-result";
 
 export class SaveSurveyResultController implements Controller {
   loadSurveyById: LoadSurveyById;
-  constructor(loadSurveyById: LoadSurveyById) {
+  saveSurveyResult: SaveSurveyResult;
+  constructor(
+    loadSurveyById: LoadSurveyById,
+    saveSurveyResult: SaveSurveyResult
+  ) {
     this.loadSurveyById = loadSurveyById;
+    this.saveSurveyResult = saveSurveyResult;
   }
   async handle({
     params: { surveyId },
     body: { answer },
+    accountId,
   }: HttpRequest): Promise<HttpResponse> {
     try {
       const survey = await this.loadSurveyById.loadById(surveyId);
@@ -28,6 +35,12 @@ export class SaveSurveyResultController implements Controller {
       } else {
         return forbidden(new InvalidParamError("surveyId"));
       }
+      await this.saveSurveyResult.save({
+        accountId,
+        surveyId,
+        answer,
+        date: new Date(),
+      });
       return ok(survey);
     } catch (error) {
       return serverError(error);
