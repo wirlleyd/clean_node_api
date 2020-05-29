@@ -1,7 +1,7 @@
 import { LoadSurveyByIdRepository } from "../../protocols/db/survey/load-survey-by-id-repository";
-import { LoadSurveysById } from "../../../domain/usecases/load-surveys-by-id";
+import { LoadSurveyById } from "../../../domain/usecases/load-surveys-by-id";
 import { SurveyModel } from "../../../domain/models/survey";
-export class DbLoadSurveyById implements LoadSurveysById {
+export class DbLoadSurveyById implements LoadSurveyById {
   loadSurveyByIdRepository: LoadSurveyByIdRepository;
   constructor(loadSurveyByIdRepository: LoadSurveyByIdRepository) {
     this.loadSurveyByIdRepository = loadSurveyByIdRepository;
