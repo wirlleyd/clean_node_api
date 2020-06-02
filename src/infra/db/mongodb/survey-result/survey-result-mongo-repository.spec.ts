@@ -1,6 +1,6 @@
 import { MongoHelper } from "../helper/mongo-helper";
 import { SurveyResultMongoRepository } from "./survey-result-mongo-repository";
-import { Collection } from "mongodb";
+import { Collection, ObjectId } from "mongodb";
 import { SurveyModel } from "../../../../domain/models/survey";
 import { AccountModel } from "../../../../domain/models/account";
 
@@ -72,8 +72,8 @@ describe("Survey Result Mongo Repository", () => {
       const suvey = await makeSurvey();
       const account = await makeAccount();
       await surveyResultCollection.insertOne({
-        surveyId: suvey.id,
-        accountId: account.id,
+        surveyId: new ObjectId(suvey.id),
+        accountId: new ObjectId(account.id),
         answer: suvey.answers[0].answer,
         date: new Date(),
       });
