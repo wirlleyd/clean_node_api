@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "sucrase-node src/main/server.ts",
-    "test": "jest --coverage  --passWithNoTests --silent --noStackTrace  --onlyChanged --watch --runInBand",
+    "start:debug": "sucrase-node src/main/server.ts --inspect",
+    "test": "jest --coverage  --passWithNoTests --onlyChanged --watch",
     "test:verbose": "jest --coverage --watchAll --passWithNoTests --runInBand",
     "test:staged": "jest --passWithNoTests",
     "test:ci": "jest --passWithNoTests",
