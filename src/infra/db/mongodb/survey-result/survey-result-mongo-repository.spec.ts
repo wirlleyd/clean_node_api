@@ -49,7 +49,7 @@ describe("Survey Result Mongo Repository", () => {
   beforeEach(async () => {
     surveyCollection = await MongoHelper.getCollection("surveys");
     await surveyCollection.deleteMany({});
-    surveyResultCollection = await MongoHelper.getCollection("surveysResult");
+    surveyResultCollection = await MongoHelper.getCollection("surveysResults");
     await surveyResultCollection.deleteMany({});
     accountCollection = await MongoHelper.getCollection("accounts");
     await accountCollection.deleteMany({});
@@ -68,6 +68,7 @@ describe("Survey Result Mongo Repository", () => {
       });
       expect(result).toBeTruthy();
     });
+
     it("Should update an survey result if its not new", async () => {
       const suvey = await makeSurvey();
       const account = await makeAccount();
