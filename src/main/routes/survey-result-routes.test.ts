@@ -65,12 +65,12 @@ describe("PUT /surveys/:surveyId/results", () => {
       date: new Date(),
     });
 
-    await request(app)
+    const response = await request(app)
       .put(`/api/surveys/${survey[0]._id}/results`)
       .set("x-access-token", accessToken)
       .send({
         answer: "any_answer",
-      })
-      .expect(200);
+      });
+    expect(response.status).toBe(200);
   });
 });
